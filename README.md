@@ -1,5 +1,5 @@
 #### 介绍
-基于SpringBoot + Vue个人博客
+基于SpringBoot + Vue开发的前后端分离博客，采用SpringSecurity进行动态权限管理，ElasticSearch全文搜索
 
 #### 软件架构
 B/S架构，采用前后端分离技术
