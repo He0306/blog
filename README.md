@@ -1,5 +1,5 @@
 #### 介绍
-基于SpringBoot + Vue开发的前后端分离博客，采用SpringSecurity进行动态权限管理，ElasticSearch全文搜索
+基于SpringBoot + Vue开发的前后端分离博客，采用SpringSecurity进行动态RBAC权限管理，ElasticSearch全文搜索，支持博客浏览，评论，友链，在线聊天，管理后台等功能。
 
 #### 软件架构
 B/S架构，采用前后端分离技术
@@ -47,6 +47,8 @@ B/S架构，采用前后端分离技术
 * 使用RabbitMQ保证MySQL数据库和ElasticSearch搜索引擎的数据同步
 
 * 使用异步线程池进行对浏览量更新操作
+
+* 接入QQ邮箱，验证码密码
 
 * ES中数据展示
 ![输入图片说明](imgs/image21.png)
