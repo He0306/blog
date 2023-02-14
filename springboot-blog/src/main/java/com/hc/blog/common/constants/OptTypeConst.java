@@ -7,6 +7,21 @@ package com.hc.blog.common.constants;
 public class OptTypeConst {
 
     /**
+     * 退出登录
+     */
+    public static final String LOGOUT = "退出登录";
+
+    /**
+     * 用户注册
+     */
+    public static final String REGISTER = "用户注册";
+
+    /**
+     * 查询
+     */
+    public static final String SELECT = "查询";
+
+    /**
      * 新增操作
      */
     public static final String SAVE_OR_UPDATE = "新增或修改";

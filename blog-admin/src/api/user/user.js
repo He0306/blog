@@ -83,5 +83,21 @@ export default {
             method: 'POST',
             data: userInfo
         })
+    },
+
+    sendCode(email){
+        return request({
+            url: `/sendCode`,
+            method: 'GET',
+            params: email
+        })
+    },
+
+    retrievePassword(user){
+        return request({
+            url: `/retrievePassword`,
+            method: 'POST',
+            data: user
+        })
     }
 }

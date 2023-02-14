@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hc.blog.common.constants.OptTypeConst.REMOVE;
-import static com.hc.blog.common.constants.OptTypeConst.SAVE_OR_UPDATE;
+import static com.hc.blog.common.constants.OptTypeConst.*;
 
 /**
  * <p>
@@ -40,6 +39,7 @@ public class TagController {
      * @param tagName
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分页查询全部数据")
     @GetMapping("/page")
     public R pageList(@RequestParam Integer pageNum,
@@ -90,6 +90,7 @@ public class TagController {
     /**
      * 查询全部
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询全部")
     @GetMapping("/list")
     public R list() {

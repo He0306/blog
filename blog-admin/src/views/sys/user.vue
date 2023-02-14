@@ -93,8 +93,8 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="角色" prop="roleId">
-          <el-select v-model="form.roleId" placeholder="请选择角色">
-            <el-option v-for="r in roleData" :key="r.id" :label="r.roleName" :value="r.id"></el-option>
+          <el-select v-model="form.roleId" placeholder="请选择角色" @change="changeGame">
+            <el-option v-for="item in roleData" :key="item.id" :label="item.roleName" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
@@ -202,8 +202,14 @@ export default {
   },
   created() {
     this.load()
+    role.findAll().then(res => {
+      this.roleData = res.data
+    })
   },
   methods: {
+    changeGame(){
+      this.$forceUpdate() //在下拉框上绑定change事件 更新视图 这样就不会有视图更新的问题
+    },
     handleAddAvatarSuccess(response,file,fileList){
       this.formAdd.avatar = response.data
     },
@@ -421,16 +427,13 @@ export default {
     handleAdd() {
       this.formAdd = {}
       this.dialogSaveVisible = true
-      role.findAll().then(res => {
-        this.roleData = res.data
-      })
     },
     //编辑按钮
     handleEdit(id) {
       this.dialogUpdateVisible = true
       user.getUserId(id).then(res => {
         this.form = res.data.user
-        this.roleData = res.data.roles
+        //this.roleData = res.data.roles
         this.form.roleId = res.data.roleId
       })
     },

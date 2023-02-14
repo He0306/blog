@@ -28,6 +28,7 @@
           <el-tag type="danger" v-if="scope.row.requestMethod === 'DELETE'">DELETE</el-tag>
           <el-tag type="success" v-if="scope.row.requestMethod === 'POST'">POST</el-tag>
           <el-tag type="warning" v-if="scope.row.requestMethod === 'PUT'">PUT</el-tag>
+          <el-tag type="success" v-if="scope.row.requestMethod === 'GET'">GET</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="nickName" label="操作人员">

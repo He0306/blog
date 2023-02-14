@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hc.blog.common.constants.OptTypeConst.SAVE_OR_UPDATE;
-import static com.hc.blog.common.constants.OptTypeConst.UPDATE;
+import static com.hc.blog.common.constants.OptTypeConst.*;
 
 /**
  * @author: 何超
@@ -35,6 +34,7 @@ public class RoleController {
      * @param name
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分页查询全部数据")
     @PreAuthorize("hasAuthority('sys:role:list')")
     @GetMapping("/page")
@@ -91,6 +91,7 @@ public class RoleController {
      *
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询所有角色")
     @GetMapping("/all")
     public R all() {

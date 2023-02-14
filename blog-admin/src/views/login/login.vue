@@ -2,7 +2,7 @@
   <div class="wrapper">
 
     <!--  人机验证  -->
-   <el-card class="cover" v-if="loginAdmin.id">
+    <el-card class="cover" v-if="loginAdmin.id">
       <slide-verify :l="42"
                     :r="10"
                     :w="310"
@@ -15,10 +15,10 @@
                     @fail="onFail"
                     @refresh="onRefresh"
       ></slide-verify>
-      <div style="margin-left: 120px;color: red">{{msg}}</div>
+      <div style="margin-left: 120px;color: red">{{ msg }}</div>
     </el-card>
 
-    <div style="width: 500px;height: 350px;margin: 150px auto" class="box">
+    <div style="width: 500px;height: 400px;margin: 150px auto" class="box">
       <div style="text-align: center;font-size: 30px;padding: 30px">用户登录</div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="账  号" prop="username">
@@ -30,12 +30,15 @@
         </el-form-item>
         <div class="register">
           <router-link to="/register">免费注册</router-link>
-          <router-link to="/ForgotPassword" style="white-space: normal;margin-left: 250px">忘记密码</router-link>
         </div>
 
         <el-form-item>
           <el-button type="primary" @click.native.prevent="submitForm()" class="btnLongin" round>登录</el-button>&nbsp;&nbsp;
           <el-button @click="resetForm('ruleForm')" class="btnReset" round>重置</el-button>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="warning" round @click="ForgotPassword" class="btnPass">忘记密码</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -69,6 +72,9 @@ export default {
     }
   },
   methods: {
+    ForgotPassword() {
+      this.$router.push("/ForgotPassword")
+    },
     onSuccess(times) {
       this.msg = 'login success, 耗时${(times / 1000).toFixed(1)}s'
       sessionStorage.setItem('user', JSON.stringify(this.loginAdmin))
@@ -133,23 +139,28 @@ export default {
   width: 450px;
 }
 
+.btnPass {
+  width: 210px;
+  height: 35px;
+  margin-left: 50px;
+}
+
 .btnLongin {
   width: 100px;
   height: 35px;
-  margin-top: 20px;
   margin-left: 50px;
 }
 
 .btnReset {
   width: 100px;
   height: 35px;
-  margin-top: 20px;
   margin-left: -2px;
 }
 
 .register {
   font-size: 10px;
-  margin-left: 100px;
+  margin-bottom: 20px;
+  margin-left: 400px;
 }
 
 

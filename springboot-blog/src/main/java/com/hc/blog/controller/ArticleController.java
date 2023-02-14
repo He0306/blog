@@ -40,6 +40,7 @@ public class ArticleController {
      * @param summary
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分页查询全部文章")
     @GetMapping("/page")
     public R pageList(@RequestParam Integer pageNum,
@@ -55,6 +56,7 @@ public class ArticleController {
      * @param id
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "根据ID查询")
     @GetMapping("/{id}")
     public R getByArticleId(@PathVariable("id") String id) {
@@ -106,7 +108,7 @@ public class ArticleController {
      * @param addArticleDto
      * @return
      */
-    @OptLog(optType = SAVE_OR_UPDATE)
+    @OptLog(optType = UPDATE)
     @ApiOperation(value = "修改")
     @PutMapping
     public R updateArticle(@RequestBody AddArticleDto addArticleDto) {

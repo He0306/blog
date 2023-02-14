@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hc.blog.common.constants.OptTypeConst.SAVE_OR_UPDATE;
-import static com.hc.blog.common.constants.OptTypeConst.UPDATE;
+import static com.hc.blog.common.constants.OptTypeConst.*;
 
 /**
  * @author: 何超
@@ -36,6 +35,7 @@ public class IconController {
      * @param name
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分页查询全部图标")
     @PreAuthorize("hasAuthority('sys:icon:list')")
     @GetMapping("/page")
@@ -92,6 +92,7 @@ public class IconController {
         return R.okResult();
     }
 
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询全部")
     @GetMapping("/getAll")
     public R getAll() {

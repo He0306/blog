@@ -54,6 +54,7 @@ public class UserController {
      * @param userId
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "前台获取个人消息")
     @GetMapping("/userInfo")
     public R userInfo(@RequestParam String userId) {
@@ -65,6 +66,7 @@ public class UserController {
      *
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = " 获取当前登录的用户的权限和菜单信息")
     @GetMapping("/getInfo")
     public R getUserById() {
@@ -105,7 +107,7 @@ public class UserController {
     @ApiOperation(value = "修改个人信息")
     @PostMapping("/updateUser")
     public R updateUser(@RequestBody User user) {
-        return R.okResult(userService.updateById(user));
+        return R.okResult(userService.updateUser(user));
     }
 
     /**
@@ -200,9 +202,17 @@ public class UserController {
         return userService.deleteUserBatch(ids);
     }
 
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "根据ID查询")
     @GetMapping("/{id}")
     public R getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }
+
+
 }

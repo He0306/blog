@@ -21,6 +21,11 @@ public enum HttpCodeEnum {
     COMMTENT_NOT_NULL(413, "评论不能为空"),
     COMMENT_NON_COMPLIANCE(414,"评论违规，请重新评论"),
     IMG_NON_COMPLIANCE(415,"图片违规，请重新上传图片"),
+    EMAIL_EXISTENCE(416,"邮箱已被注册"),
+    EMAIL_NON_NULL(417,"邮箱不能为空"),
+    MISSING_PARAMETER(418,"缺少参数"),
+    VERIFICATION_CODE_ERROR(419,"验证码错误"),
+    EMAIL_NON_EXISTENCE(420,"邮箱不存在"),
     SYSTEM_ERROR(500, "系统错误请联系管理员");
 
 

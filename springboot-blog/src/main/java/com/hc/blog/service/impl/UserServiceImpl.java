@@ -14,6 +14,7 @@ import com.hc.blog.entity.User;
 import com.hc.blog.entity.UserRole;
 import com.hc.blog.entity.dto.RegisterUserDto;
 import com.hc.blog.entity.dto.UpdatePwdDto;
+import com.hc.blog.entity.dto.UserRetrieveDto;
 import com.hc.blog.entity.vo.*;
 import com.hc.blog.handler.security.LoginUser;
 import com.hc.blog.mapper.RoleMapper;
@@ -25,8 +26,12 @@ import com.hc.blog.service.IUserService;
 import com.hc.blog.utils.BeanCopyUtils;
 import com.hc.blog.utils.JwtUtils;
 import com.hc.blog.utils.SecurityUtils;
+import com.hc.blog.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -76,6 +81,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     RedisCache redisCache;
+
+    @Autowired
+    JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String from;
 
     //登录
     @Override
@@ -198,6 +209,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (count > 0) {
             throw new ServiceException(HttpCodeEnum.USERNAME_EXISTENCE);
         }
+        queryWrapper.eq(User::getEmail,user.getEmail());
+        Long aLong = userMapper.selectCount(queryWrapper);
+        if (aLong > 0){
+            throw new ServiceException(HttpCodeEnum.EMAIL_EXISTENCE);
+        }
         user.setPassword(bCryptPasswordEncoder.encode(Constants.DEFAULT_PASSWORD));
         userMapper.insert(user);
         UserRole userRole = new UserRole();
@@ -209,6 +225,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public R updateUser(User user) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getEmail,user.getEmail());
+        Long count = userMapper.selectCount(queryWrapper);
+        if (count > 0){
+            throw new ServiceException(HttpCodeEnum.EMAIL_EXISTENCE);
+        }
         userMapper.updateById(user);
         userRoleMapper.userRoleByRoleId(user.getRoleId(), user.getId());
         return R.okResult();
@@ -260,5 +282,60 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String userId = SecurityUtils.getUserId();
         User user = userMapper.selectById(userId);
         return R.okResult(user);
+    }
+
+    /**
+     * 发送验证码
+     *
+     * @param email
+     * @return
+     */
+    @Override
+    public R sendCode(String email) {
+        if (!StringUtils.hasText(email)){
+            return R.errorResult(HttpCodeEnum.EMAIL_NON_NULL);
+        }
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(from);
+        mailMessage.setTo(email);
+        String subject = "个人博客";
+        mailMessage.setSubject(subject);
+        String code = ValidateCodeUtils.generateValidateCode(6).toString();
+        String context = "欢迎使用个人博客，登录验证码为：" + code + ",五分钟内有效，请妥善保管！";
+        mailMessage.setText(context);
+        // 发送邮箱
+        javaMailSender.send(mailMessage);
+        //将生成的验证码缓存到redis中
+        redisCache.setCacheObject(email,code,5,TimeUnit.MINUTES);
+        return R.okResult();
+    }
+
+    /**
+     * 找回密码
+     *
+     * @param dto
+     * @return
+     */
+    @Override
+    public R retrievePassword(UserRetrieveDto dto) {
+        if (dto != null && dto.getEmail() != null && dto.getCode() != null && dto.getPassword() != null){
+            String code = redisCache.getCacheObject(dto.getEmail());
+            if (!dto.getCode().equals(code)){
+                return R.errorResult(HttpCodeEnum.VERIFICATION_CODE_ERROR);
+            }
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getEmail,dto.getEmail());
+            User user = userMapper.selectOne(queryWrapper);
+            if (user == null){
+                return R.errorResult(HttpCodeEnum.EMAIL_NON_EXISTENCE);
+            }
+            String password = bCryptPasswordEncoder.encode(dto.getPassword());
+            user.setPassword(password);
+            userMapper.updateById(user);
+            redisCache.deleteObject(dto.getEmail());
+            return R.okResult();
+        }else {
+            return R.errorResult(HttpCodeEnum.MISSING_PARAMETER);
+        }
     }
 }

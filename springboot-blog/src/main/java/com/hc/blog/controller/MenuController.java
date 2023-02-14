@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hc.blog.common.constants.OptTypeConst.SAVE_OR_UPDATE;
-import static com.hc.blog.common.constants.OptTypeConst.UPDATE;
+import static com.hc.blog.common.constants.OptTypeConst.*;
 
 /**
  * @author: 何超
@@ -34,6 +33,7 @@ public class MenuController {
      * @param name
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "树型结构显示菜单")
     @GetMapping
     public R findAll(@RequestParam(defaultValue = "") String name) {
@@ -45,6 +45,7 @@ public class MenuController {
      *
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询所有菜单id的集合")
     @GetMapping("/ids")
     public R findAllIds() {

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div style="width: 520px;height: 450px;margin: 130px auto" class="box">
+    <div style="width: 520px;height: 380px;margin: 130px auto" class="box">
       <div style="text-align: center;font-size: 30px;padding: 30px">用户注册</div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="账  号" prop="username">
@@ -12,9 +12,11 @@
         <el-form-item label="确认密码" prop="confirm">
           <el-input type="password" v-model="ruleForm.confirm" placeholder="请确认密码"></el-input>
         </el-form-item>
-        <div class="login"><router-link to="/login">已有账号？去登录</router-link></div>
+        <div class="login">
+          <router-link to="/login">已有账号？去登录</router-link>
+        </div>
         <el-form-item>
-          <el-button type="primary" @click="register" class="btn1" round>注册</el-button>&nbsp;&nbsp;
+          <el-button type="primary" @click="register" class="btnRegister" round>注册</el-button>&nbsp;&nbsp;
         </el-form-item>
       </el-form>
     </div>
@@ -65,8 +67,8 @@ export default {
             })
             return false
           }
-          login.register(this.ruleForm).then(res=>{
-            if (res.code === 200){
+          login.register(this.ruleForm).then(res => {
+            if (res.code === 200) {
               this.$message({
                 showClose: true,
                 type: 'success',
@@ -74,7 +76,7 @@ export default {
                 duration: 1000
               })
               this.$router.push("/")
-            }else {
+            } else {
               this.$message({
                 showClose: true,
                 type: 'error',
@@ -96,6 +98,7 @@ export default {
   background-image: linear-gradient(to bottom right, rgba(252, 70, 107, 0.87), rgba(63, 94, 251, 0.88));
   overflow: hidden;
 }
+
 .box {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
@@ -104,17 +107,20 @@ export default {
   width: 450px;
 }
 
-.btn1 {
+.login {
+  font-size: 12px;
+  margin-left: 350px;
+}
+
+.btnRegister {
   width: 200px;
   height: 40px;
   margin-left: 50px;
-  margin-top: 10px;
+  margin-top: 35px;
 }
 
 a {
   text-decoration: none;
   color: #cccccc;
-  font-size: 12px;
-  margin-left: 350px;
 }
 </style>

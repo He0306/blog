@@ -39,6 +39,7 @@ public class CategoryController {
      * @param categoryName
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分类分页查询全部")
     @GetMapping("/page")
     public R pageList(@RequestParam Integer pageNum,
@@ -94,6 +95,7 @@ public class CategoryController {
      *
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询全部")
     @GetMapping("/list")
     public R list() {

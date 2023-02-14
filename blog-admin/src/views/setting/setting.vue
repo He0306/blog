@@ -108,29 +108,29 @@ export default {
     updateUser() {
       this.$refs['userInfo'].validate((valid) => {
         if (valid) {
-            userApi.updateUserInfo(this.userInfo).then(res=>{
-              if (res.code === 200){
-                this.$message({
-                  showClose: true,
-                  type: 'success',
-                  message: '个人信息修改成功',
-                  duration: 1000
-                })
-                //触发父级更新User方法
-                this.$emit("refreshUser")
-                //更新浏览器存储的用户信息
-                this.getUserInfo().then(res=>{
-                  sessionStorage.setItem("user",JSON.stringify(res))
-                })
-              }else {
-                this.$message({
-                  showClose: true,
-                  message: '修改个人信息失败',
-                  type: 'error',
-                  duration: 1000
-                })
-              }
-            })
+          userApi.updateUserInfo(this.userInfo).then(res => {
+            if (res.code === 200) {
+              this.$message({
+                showClose: true,
+                type: 'success',
+                message: '个人信息修改成功',
+                duration: 1000
+              })
+              //触发父级更新User方法
+              this.$emit("refreshUser")
+              //更新浏览器存储的用户信息
+              this.getUserInfo().then(res => {
+                sessionStorage.setItem("user", JSON.stringify(res))
+              })
+            } else {
+              this.$message({
+                showClose: true,
+                message: '修改个人信息失败',
+                type: 'error',
+                duration: 1000
+              })
+            }
+          })
         }
       })
     },
@@ -223,6 +223,20 @@ export default {
 </script>
 
 <style>
+.el-tabs__active-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: #FFD700;
+  z-index: 1;
+  transition: transform .3s cubic-bezier(.645,.045,.355,1);
+  list-style: none;
+}
+.el-tabs__item.is-active {
+  color: #FFD700
+}
+
 .box-card {
   height: 620px;
 }

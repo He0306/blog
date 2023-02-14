@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.hc.blog.common.constants.OptTypeConst.SAVE_OR_UPDATE;
-import static com.hc.blog.common.constants.OptTypeConst.UPDATE;
+import static com.hc.blog.common.constants.OptTypeConst.*;
 
 /**
  * <p>
@@ -40,6 +39,7 @@ public class LinkController {
      * @param name
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "分页查询全部数据")
     @GetMapping("/page")
     public R page(@RequestParam Integer pageNum,

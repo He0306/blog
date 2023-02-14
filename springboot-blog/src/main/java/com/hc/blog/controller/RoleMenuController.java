@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.hc.blog.common.constants.OptTypeConst.BIND_MENU_ROLE;
+import static com.hc.blog.common.constants.OptTypeConst.SELECT;
 
 /**
  * @author: 何超
@@ -30,6 +31,7 @@ public class RoleMenuController {
      * @param id
      * @return
      */
+    @OptLog(optType = SELECT)
     @ApiOperation(value = "查询角色菜单表中绑定的菜单ID")
     @GetMapping("/{id}")
     public R getRoleMenuById(@PathVariable("id") String id) {

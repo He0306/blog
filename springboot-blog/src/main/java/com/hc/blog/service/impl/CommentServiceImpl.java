@@ -12,7 +12,6 @@ import com.hc.blog.service.ICommentService;
 import com.hc.blog.service.IUserService;
 import com.hc.blog.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

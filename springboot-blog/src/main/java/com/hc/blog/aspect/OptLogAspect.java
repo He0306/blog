@@ -15,7 +15,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -44,7 +43,6 @@ public class OptLogAspect {
     public void optLogPointCut() {
     }
 
-    @Async
     @AfterReturning(value = "optLogPointCut()", returning = "keys")
     @SuppressWarnings("unchecked")
     public void saveOptLog(JoinPoint joinPoint, Object keys) {
@@ -89,11 +87,11 @@ public class OptLogAspect {
         operationLog.setNickName(SecurityUtils.getLoginUser().getUser().getNickName());
         //请求IP
         String ipAddress = IpUtils.getIpAddress(request);
-        operationLog.setIpAddress(ipAddress);
+        operationLog.setIpAddress(IpUtils.getIp());
         //请求地址
         String ipSource = IpUtils.getIpSource(ipAddress);
         log.info("=======>{}" + ipSource);
-        operationLog.setIpSource(IpUtils.getIpSource(ipAddress));
+        operationLog.setIpSource(IpUtils.getIpInfo());
         //请求URL
         operationLog.setOptUrl(request.getRequestURI());
         operationLogMapper.insert(operationLog);

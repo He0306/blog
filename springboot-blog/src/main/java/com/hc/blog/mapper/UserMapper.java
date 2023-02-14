@@ -3,6 +3,7 @@ package com.hc.blog.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hc.blog.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+
 
 }

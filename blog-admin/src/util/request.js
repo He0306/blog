@@ -12,7 +12,7 @@ request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8'
     let token = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null
     let user = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null
-    if (token !=null && user !=null) {
+    if (token != null && user != null) {
         config.headers['token'] = token
     }
 
@@ -23,7 +23,9 @@ request.interceptors.request.use(config => {
 
 //响应拦截器
 request.interceptors.response.use(response => {
+
         const res = response.data
+        console.log(res.msg)
         if (res.code === 401) {
             MessageBox.confirm('登录状态已过期，请重新登录', '系统提示', {
                 confirmButtonText: '重新登录',
@@ -35,7 +37,7 @@ request.interceptors.response.use(response => {
                 sessionStorage.clear()
                 localStorage.clear()
             })
-        } else if (res.code === 407){
+        } else if (res.code === 407) {
             MessageBox.confirm('登录状态已过期，请重新登录', '系统提示', {
                 confirmButtonText: '重新登录',
                 cancelButtonText: '取消',
@@ -46,21 +48,9 @@ request.interceptors.response.use(response => {
                 sessionStorage.clear()
                 localStorage.clear()
             })
-        } else if (res.code !== 200) {
-            MessageBox.confirm('系统错误，请联系管理员', '系统提示', {
-                confirmButtonText: '回到登录页面',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                location.href = '/'
-                resetRouter()
-                sessionStorage.clear()
-                localStorage.clear()
-            })
-            return Promise.reject('error')
-        } else {
-            return response.data
         }
+            return response.data
+
     },
     error => {
 

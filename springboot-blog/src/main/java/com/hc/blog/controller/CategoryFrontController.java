@@ -21,6 +21,10 @@ public class CategoryFrontController {
     @Autowired
     ICategoryService categoryService;
 
+    /**
+     * 查询状态正常的标签
+     * @return
+     */
     @ApiOperation(value = "查询状态正常的标签")
     @GetMapping("/getCategoryList")
     public R getCategoryList() {

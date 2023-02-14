@@ -1,17 +1,20 @@
 package com.hc.blog.controller;
 
+import com.hc.blog.annotation.OptLog;
 import com.hc.blog.common.lang.R;
 import com.hc.blog.entity.User;
 import com.hc.blog.entity.dto.RegisterUserDto;
+import com.hc.blog.entity.dto.UserRetrieveDto;
 import com.hc.blog.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.hc.blog.common.constants.OptTypeConst.LOGOUT;
+import static com.hc.blog.common.constants.OptTypeConst.REGISTER;
 
 /**
  * @author: 何超
@@ -41,6 +44,7 @@ public class LoginController {
      *
      * @return
      */
+    @OptLog(optType = LOGOUT)
     @ApiOperation(value = "退出登录")
     @PostMapping("/admin/logout")
     public R logout() {
@@ -53,9 +57,32 @@ public class LoginController {
      * @param registerUserDto
      * @return
      */
+    @OptLog(optType = REGISTER)
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
     public R registerUser(@Valid @RequestBody RegisterUserDto registerUserDto) {
         return userService.register(registerUserDto);
+    }
+
+    /**
+     * 发送验证码
+     * @param email
+     * @return
+     */
+    @ApiOperation(value = "发送验证码")
+    @GetMapping("/sendCode")
+    public R sendCode(@RequestParam("email") String email){
+        return userService.sendCode(email);
+    }
+
+    /**
+     * 找回密码
+     * @param dto
+     * @return
+     */
+    @ApiOperation(value = "找回密码")
+    @PostMapping("/retrievePassword")
+    public R retrievePassword(@RequestBody UserRetrieveDto dto){
+        return userService.retrievePassword(dto);
     }
 }
