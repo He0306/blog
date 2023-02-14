@@ -4,8 +4,8 @@ spring:
   #邮件验证码
   mail:
     host: smtp.qq.com
-    username: 2740860037@qq.com
-    password: mdlyjdjesvzrdeeb
+    username: 
+    password: 
     default-encoding: UTF-8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -53,7 +53,7 @@ spring:
       host: 127.0.0.1
       database: articledb
   rabbitmq:
-    host: 101.34.43.146
+    host: 127.0.0.1
     port: 5672
     username: admin
     password: 123456
@@ -72,8 +72,8 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-beijing.aliyuncs.com
-      keyid: LTAI5tGjs97ohSN6s8BMW3zh
-      keysecret: OmPSqKOrsIdqSuHY6V2SeAGIQDF9p9
-      bucketname: hcd-blog
+      keyid: 
+      keysecret: 
+      bucketname: 
 
 
