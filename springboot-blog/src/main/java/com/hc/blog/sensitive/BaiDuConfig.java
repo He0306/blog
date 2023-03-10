@@ -8,11 +8,11 @@ import com.baidu.aip.contentcensor.AipContentCensor;
  */
 public class BaiDuConfig {
 
-    private static final String APP_ID = "29233699";
+    private static final String APP_ID = "";
 
-    private static final String API_KEY = "Om45oOrv36B8xWRUAuPv64MV";
+    private static final String API_KEY = "";
 
-    private static final String SECRET_KEY = "2KzYNDVyKo3fgXkHMsnpSIltW18eq245";
+    private static final String SECRET_KEY = "";
 
     public static final AipContentCensor client = new AipContentCensor(APP_ID,API_KEY,SECRET_KEY);
 
